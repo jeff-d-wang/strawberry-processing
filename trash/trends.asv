@@ -1,0 +1,43 @@
+adj = -1 * ones(30);
+adjzeros = zeros(30);
+
+for iter = 1:150
+    row = malicious{iter, (2:7)};
+
+    adj(row(1)+1, row(2)+1) = row(4);
+
+    adj(row(1)+1, row(3)+1) = row(5);
+
+    adj(row(2)+1, row(3)+1) = row(6);
+    
+    adj(row(2)+1, row(1)+1) = row(4);
+
+    adj(row(3)+1, row(1)+1) = row(5);
+
+    adj(row(3)+1, row(2)+1) = row(6);
+    
+    
+    
+    adjzeros(row(1)+1, row(2)+1) = row(4);
+
+    adjzeros(row(1)+1, row(3)+1) = row(5);
+
+    adjzeros(row(2)+1, row(3)+1) = row(6);
+        
+    
+    adjzeros(row(2)+1, row(1)+1) = row(4);
+
+    adjzeros(row(3)+1, row(1)+1) = row(5);
+
+    adjzeros(row(3)+1, row(2)+1) = row(6);
+
+
+end
+
+disp(adj)
+
+G = graph(adj)
+
+results = spectralcluster(adj, 2)
+
+indicator = (results~=
