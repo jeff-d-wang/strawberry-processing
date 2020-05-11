@@ -37,3 +37,4 @@ idx150 = spectralcluster(sbdata.adj150, 2)
 
 figure, imagesc(sbdata.adj150);
 colorbar
+
