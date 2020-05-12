@@ -7,6 +7,8 @@ adjzeros = zeros(number_objects);
 performance = zeros(1, number_entries);
 performancezeros = zeros(1, number_entries);
 
+% todo: normalize
+
 for iter = 31:180
      
     disp(iter)
