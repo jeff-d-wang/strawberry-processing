@@ -9,6 +9,7 @@ performancezeros = zeros(1, number_entries);
 
 % todo: normalize
 
+
 for iter = 31:180
      
     disp(iter)
