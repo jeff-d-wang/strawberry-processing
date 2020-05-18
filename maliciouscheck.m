@@ -1,62 +1,36 @@
 number_entries = 150;
 number_objects = 30;
 
-adj = -1 * ones(number_objects);
-adjzeros = zeros(number_objects);
+totaliters = 30;
 
-performance = zeros(1, number_entries);
-performancezeros = zeros(1, number_entries);
+overall = zeros(1, number_objects); 
 
-% todo: normalize
+for numberiters = 1:totaliters
+    adjzeros = zeros(number_objects);
 
-% 100\
-for iter = 31:180
-     
-    disp(iter)
+    sub150 = flowers{1+numberiters:150+numberiters, (2:7)}; % change for different dataset.
+
+    sub150 = sub150(randperm(size(sub150, 1)), :); 
+
+    overt = zeros(1, number_entries); 
     
-    row = malicious{iter, (2:7)};
+    for iter = 1:150
+        row = sub150(iter, :);
 
-    adj(row(1)+1, row(2)+1) = row(4);
+        adjzeros(row(1)+1, row(2)+1) = row(4);
+        adjzeros(row(1)+1, row(3)+1) = row(5);
+        adjzeros(row(2)+1, row(3)+1) = row(6);
 
-    adj(row(1)+1, row(3)+1) = row(5);
-
-    adj(row(2)+1, row(3)+1) = row(6);
+        adjzeros(row(2)+1, row(1)+1) = row(4);
+        adjzeros(row(3)+1, row(1)+1) = row(5);
+        adjzeros(row(3)+1, row(2)+1) = row(6);
+    end
     
-    
-    adj(row(2)+1, row(1)+1) = row(4);
-
-    adj(row(3)+1, row(1)+1) = row(5);
-
-    adj(row(3)+1, row(2)+1) = row(6);
-    
-    
-    adjzeros(row(1)+1, row(2)+1) = row(4);
-
-    adjzeros(row(1)+1, row(3)+1) = row(5);
-
-    adjzeros(row(2)+1, row(3)+1) = row(6);
-        
-    
-    adjzeros(row(2)+1, row(1)+1) = row(4);
-
-    adjzeros(row(3)+1, row(1)+1) = row(5);
-
-    adjzeros(row(3)+1, row(2)+1) = row(6);
-    
-    
-    results = spectralcluster(adj, 2);
-
-    indicator = (results~=sbdata.groundtruth);
-    
-    performance(iter) = sum(indicator);
-    
-    
+    disp(numberiters)
     resultszero = spectralcluster(adjzeros, 2);
-
     indicatorzeros = (resultszero~=sbdata.groundtruth);
-    
-    performancezeros(iter) = sum(indicatorzeros); 
-
+    performancezero =  min(sum(indicatorzeros), number_objects-sum(indicatorzeros ));
+    overall(numberiters) = performancezero;
+    G = graph(adjzeros);
 end
-
 
